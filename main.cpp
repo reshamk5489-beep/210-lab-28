@@ -27,6 +27,7 @@ int sum_of_goats_age(list<Goat> &trip);
 int main() {
     srand(time(0));
     bool again;
+    int totalAge;
 
     // read & populate arrays for names and colors
     ifstream fin("names.txt");
@@ -99,7 +100,7 @@ int main() {
                 break;
             case 11:
                 cout << "Summing up goats's age: ";
-                int totalAge = sum_of_goats_age(trip);
+                totalAge = sum_of_goats_age(trip);
                 cout << totalAge << endl;
                 break;
             default:
@@ -129,7 +130,7 @@ int main_menu() {
     cout << "Choice --> ";
     int choice;
     cin >> choice;
-    while (choice < 1 || choice > 11) {
+    while (choice < 1 || choice > 12) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -180,16 +181,19 @@ int select_goat(list<Goat> trp) {
 
 void sort_goats(list<Goat> &trip)
 {
+    // Sort goats alphabetically using list.sort()
     trip.sort();
 }
 
 void reverse_goats(list<Goat> &trip)
 {
+    // Reverse order of goats
     trip.reverse();
 }
 
 void iterate_goats(list<Goat> &trip)
 {
+    // Iterate through goats with for_each
     int i = 1;
     for_each(trip.begin(), trip.end(), [&i](Goat& gt)
     { 
@@ -203,6 +207,7 @@ void iterate_goats(list<Goat> &trip)
 
 void find_goat(list<Goat> &trip)
 {
+    // Find goat by name using find_if
     string goatName;
 
     cout << "Searching for goat..." << endl;
@@ -220,6 +225,7 @@ void find_goat(list<Goat> &trip)
 
 void any_goat_of_color(list<Goat> &trip)
 {
+    // Find goats of particular color chosen by user using any_of function
     string color;
 
     cout << "Enter goat color: ";
@@ -235,11 +241,13 @@ void any_goat_of_color(list<Goat> &trip)
 
 void fill_goats(list<Goat> &trip)
 {
+    // Fill all goats with this default goat using fill function
     fill(trip.begin(), trip.end(), Goat("Billy", 2, "Brown"));
 }
 
 void reduce_goats_age(list<Goat> &trip)
 {
+    // Iterate each goat and reduce age by 1 using transform function
     transform(trip.begin(), trip.end(), trip.begin(),
         [](Goat g)
         {
@@ -253,6 +261,7 @@ void reduce_goats_age(list<Goat> &trip)
 
 int sum_of_goats_age(list<Goat> &trip)
 {
+    // Calculate sum of all goats age using accumulate function
     int totalAge = accumulate(
         trip.begin(), trip.end(), 0,
         [](int sum, const Goat &g)
