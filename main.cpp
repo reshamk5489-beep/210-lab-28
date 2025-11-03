@@ -2,6 +2,11 @@
 #include <fstream>
 #include <iomanip>
 #include <list>
+#include <random>
+#include <algorithm>
+#include <numeric>
+#include <tuple>
+#include <vector>
 #include "Goat.h"
 using namespace std;
 
@@ -17,6 +22,7 @@ void reverse_goats(list<Goat> &trip);
 void iterate_goats(list<Goat> &trip);
 void find_goat(list<Goat> &trip);
 void any_goat_of_color(list<Goat> &trip);
+void shuffle_goats(list<Goat> &trip);
 
 int main() {
     srand(time(0));
@@ -49,7 +55,7 @@ int main() {
     
     // Goat Manager 3001 Engine
     int sel = main_menu();
-    while (sel != 8) {
+    while (sel != 10) {
         switch (sel) {
             case 1:
                 cout << "Adding a goat.\n";
@@ -79,13 +85,20 @@ int main() {
                 cout << "Finding goat and displaying its data." << endl;
                 find_goat(trip);
                 break;
+            case 8:
+                cout << "Find any goat with given color" << endl;
+                any_goat_of_color(trip);
+                break;
+            case 9:
+                cout << "Shuffling goats" << endl;
+                shuffle_goats(trip);
+                break;
             default:
                 cout << "Invalid selection.\n";
                 break;
         }
         sel = main_menu();
     }
-    
 
     return 0;
 }
@@ -99,11 +112,13 @@ int main_menu() {
     cout << "[5] Reverse goats" << endl;
     cout << "[6] Iterate goats" << endl;
     cout << "[7] Find goat" << endl;
-    cout << "[8] Quit\n";
+    cout << "[8] Any goat with given color" << endl;
+    cout << "[9] Shuffle goats" << endl;
+    cout << "[10] Quit\n";
     cout << "Choice --> ";
     int choice;
     cin >> choice;
-    while (choice < 1 || choice > 8) {
+    while (choice < 1 || choice > 10) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -205,4 +220,9 @@ void any_goat_of_color(list<Goat> &trip)
     });
 
     cout << "Is there a goat with this color? " << (hasColor ? "Yes" : "No") << endl;
+}
+
+void shuffle_goats(list<Goat> &trip)
+{
+    shuffle(trip.begin(), trip.end(), default_random_engine());
 }
