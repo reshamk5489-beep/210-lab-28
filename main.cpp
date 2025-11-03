@@ -5,8 +5,6 @@
 #include <random>
 #include <algorithm>
 #include <numeric>
-#include <tuple>
-#include <vector>
 #include "Goat.h"
 using namespace std;
 
@@ -24,6 +22,7 @@ void find_goat(list<Goat> &trip);
 void any_goat_of_color(list<Goat> &trip);
 void fill_goats(list<Goat> &trip);
 void reduce_goats_age(list<Goat> &trip);
+int sum_of_goats_age(list<Goat> &trip);
 
 int main() {
     srand(time(0));
@@ -56,7 +55,7 @@ int main() {
     
     // Goat Manager 3001 Engine
     int sel = main_menu();
-    while (sel != 10) {
+    while (sel != 12) {
         switch (sel) {
             case 1:
                 cout << "Adding a goat.\n";
@@ -94,6 +93,15 @@ int main() {
                 cout << "Filling goats" << endl;
                 fill_goats(trip);
                 break;
+            case 10:
+                cout << "Reducing goats' age by 1" << endl;
+                reduce_goats_age(trip);
+                break;
+            case 11:
+                cout << "Summing up goats's age: ";
+                int totalAge = sum_of_goats_age(trip);
+                cout << totalAge << endl;
+                break;
             default:
                 cout << "Invalid selection.\n";
                 break;
@@ -115,11 +123,13 @@ int main_menu() {
     cout << "[7] Find goat" << endl;
     cout << "[8] Any goat with given color" << endl;
     cout << "[9] Fill goats" << endl;
-    cout << "[10] Quit\n";
+    cout << "[10] Reduce goats' age by 1" << endl;
+    cout << "[11] Sum of goats' age" << endl;
+    cout << "[12] Quit\n";
     cout << "Choice --> ";
     int choice;
     cin >> choice;
-    while (choice < 1 || choice > 10) {
+    while (choice < 1 || choice > 11) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -239,4 +249,17 @@ void reduce_goats_age(list<Goat> &trip)
             return g;
         }
     );
+}
+
+int sum_of_goats_age(list<Goat> &trip)
+{
+    int totalAge = accumulate(
+        trip.begin(), trip.end(), 0,
+        [](int sum, const Goat &g)
+        {
+            return sum + g.get_age();
+        }
+    );
+
+    return totalAge;
 }
