@@ -15,6 +15,7 @@ int main_menu();
 void sort_goats(list<Goat> &trip);
 void reverse_goats(list<Goat> &trip);
 void iterate_goats(list<Goat> &trip);
+void find_goat(list<Goat> &trip);
 
 int main() {
     srand(time(0));
@@ -47,7 +48,7 @@ int main() {
     
     // Goat Manager 3001 Engine
     int sel = main_menu();
-    while (sel != 4) {
+    while (sel != 7) {
         switch (sel) {
             case 1:
                 cout << "Adding a goat.\n";
@@ -69,6 +70,10 @@ int main() {
                 cout << "Reversing goats." << endl;
                 reverse_goats(trip);
                 break;
+            case 6:
+                cout << "Iterating goats and displaying goats data." << endl;
+                iterate_goats(trip);
+                break;
             default:
                 cout << "Invalid selection.\n";
                 break;
@@ -86,11 +91,13 @@ int main_menu() {
     cout << "[2] Delete a goat\n";
     cout << "[3] List goats\n";
     cout << "[4] Sort goats" << endl;
-    cout << "[5] Quit\n";
+    cout << "[5] Reverse goats" << endl;
+    cout << "[6] Iterate goats" << endl;
+    cout << "[7] Quit\n";
     cout << "Choice --> ";
     int choice;
     cin >> choice;
-    while (choice < 1 || choice > 5) {
+    while (choice < 1 || choice > 7) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -151,8 +158,8 @@ void reverse_goats(list<Goat> &trip)
 
 void iterate_goats(list<Goat> &trip)
 {
-    int i = 0;
-    for_each(trip.begin(), trip.end(), [](Goat& gt)
+    int i = 1;
+    for_each(trip.begin(), trip.end(), [&i](Goat& gt)
     { 
         cout << "\t" 
         << "[" << i++ << "] "
@@ -160,4 +167,19 @@ void iterate_goats(list<Goat> &trip)
         << " (" << gt.get_age() 
         << ", " << gt.get_color() << ")\n"; 
     });
+}
+
+void find_goat(list<Goat> &trip)
+{
+    string goatName;
+
+    cout << "Searching for goat..." << endl;
+    cout << "Enter goat name: ";
+    cin >> goatName;
+
+    auto it = find_if(trip.begin(), trip.end(), [&goatName](const Goat& gt)
+    { 
+        return gt.get_name() == goatName;
+    });
+
 }
