@@ -12,6 +12,9 @@ void delete_goat(list<Goat> &trip);
 void add_goat(list<Goat> &trip, string [], string []);
 void display_trip(list<Goat> trip);
 int main_menu();
+void sort_goats(list<Goat> &trip);
+void reverse_goats(list<Goat> &trip);
+void iterate_goats(list<Goat> &trip);
 
 int main() {
     srand(time(0));
@@ -58,6 +61,14 @@ int main() {
                 cout << "Displaying goat data.\n";
                 display_trip(trip);
                 break;
+            case 4:
+                cout << "Sorting goats." << endl;
+                sort_goats(trip);
+                break;
+            case 5:
+                cout << "Reversing goats." << endl;
+                reverse_goats(trip);
+                break;
             default:
                 cout << "Invalid selection.\n";
                 break;
@@ -74,11 +85,12 @@ int main_menu() {
     cout << "[1] Add a goat\n";
     cout << "[2] Delete a goat\n";
     cout << "[3] List goats\n";
-    cout << "[4] Quit\n";
+    cout << "[4] Sort goats" << endl;
+    cout << "[5] Quit\n";
     cout << "Choice --> ";
     int choice;
     cin >> choice;
-    while (choice < 1 || choice > 4) {
+    while (choice < 1 || choice > 5) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -125,4 +137,27 @@ int select_goat(list<Goat> trp) {
         cin >> input;
     }
     return input;
+}
+
+void sort_goats(list<Goat> &trip)
+{
+    trip.sort();
+}
+
+void reverse_goats(list<Goat> &trip)
+{
+    trip.reverse();
+}
+
+void iterate_goats(list<Goat> &trip)
+{
+    int i = 0;
+    for_each(trip.begin(), trip.end(), [](Goat& gt)
+    { 
+        cout << "\t" 
+        << "[" << i++ << "] "
+        << gt.get_name() 
+        << " (" << gt.get_age() 
+        << ", " << gt.get_color() << ")\n"; 
+    });
 }
