@@ -22,7 +22,8 @@ void reverse_goats(list<Goat> &trip);
 void iterate_goats(list<Goat> &trip);
 void find_goat(list<Goat> &trip);
 void any_goat_of_color(list<Goat> &trip);
-void shuffle_goats(list<Goat> &trip);
+void fill_goats(list<Goat> &trip);
+void reduce_goats_age(list<Goat> &trip);
 
 int main() {
     srand(time(0));
@@ -90,8 +91,8 @@ int main() {
                 any_goat_of_color(trip);
                 break;
             case 9:
-                cout << "Shuffling goats" << endl;
-                shuffle_goats(trip);
+                cout << "Filling goats" << endl;
+                fill_goats(trip);
                 break;
             default:
                 cout << "Invalid selection.\n";
@@ -113,7 +114,7 @@ int main_menu() {
     cout << "[6] Iterate goats" << endl;
     cout << "[7] Find goat" << endl;
     cout << "[8] Any goat with given color" << endl;
-    cout << "[9] Shuffle goats" << endl;
+    cout << "[9] Fill goats" << endl;
     cout << "[10] Quit\n";
     cout << "Choice --> ";
     int choice;
@@ -222,7 +223,20 @@ void any_goat_of_color(list<Goat> &trip)
     cout << "Is there a goat with this color? " << (hasColor ? "Yes" : "No") << endl;
 }
 
-void shuffle_goats(list<Goat> &trip)
+void fill_goats(list<Goat> &trip)
 {
-    shuffle(trip.begin(), trip.end(), default_random_engine());
+    fill(trip.begin(), trip.end(), Goat("Billy", 2, "Brown"));
+}
+
+void reduce_goats_age(list<Goat> &trip)
+{
+    transform(trip.begin(), trip.end(), trip.begin(),
+        [](Goat g)
+        {
+            int newAge = g.get_age() - 1;
+            if (newAge < 0) newAge = 0; // prevent negative age
+            g.set_age(newAge);
+            return g;
+        }
+    );
 }
