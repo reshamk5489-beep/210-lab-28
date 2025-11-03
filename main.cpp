@@ -16,6 +16,7 @@ void sort_goats(list<Goat> &trip);
 void reverse_goats(list<Goat> &trip);
 void iterate_goats(list<Goat> &trip);
 void find_goat(list<Goat> &trip);
+void any_goat_of_color(list<Goat> &trip);
 
 int main() {
     srand(time(0));
@@ -48,7 +49,7 @@ int main() {
     
     // Goat Manager 3001 Engine
     int sel = main_menu();
-    while (sel != 7) {
+    while (sel != 8) {
         switch (sel) {
             case 1:
                 cout << "Adding a goat.\n";
@@ -71,8 +72,12 @@ int main() {
                 reverse_goats(trip);
                 break;
             case 6:
-                cout << "Iterating goats and displaying goats data." << endl;
+                cout << "Iterating goats and displaying their data." << endl;
                 iterate_goats(trip);
+                break;
+            case 7:
+                cout << "Finding goat and displaying its data." << endl;
+                find_goat(trip);
                 break;
             default:
                 cout << "Invalid selection.\n";
@@ -93,11 +98,12 @@ int main_menu() {
     cout << "[4] Sort goats" << endl;
     cout << "[5] Reverse goats" << endl;
     cout << "[6] Iterate goats" << endl;
-    cout << "[7] Quit\n";
+    cout << "[7] Find goat" << endl;
+    cout << "[8] Quit\n";
     cout << "Choice --> ";
     int choice;
     cin >> choice;
-    while (choice < 1 || choice > 7) {
+    while (choice < 1 || choice > 8) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -182,4 +188,21 @@ void find_goat(list<Goat> &trip)
         return gt.get_name() == goatName;
     });
 
+    if (it != trip.end())
+        cout << it->get_name() << " found with age: " << it->get_age() << " and color: " << it->get_color() << endl;
+}
+
+void any_goat_of_color(list<Goat> &trip)
+{
+    string color;
+
+    cout << "Enter goat color: ";
+    cin >> color;
+
+    bool hasColor = any_of(trip.begin(), trip.end(), [&color](const Goat& gt)
+    { 
+        return gt.get_color() == color; 
+    });
+
+    cout << "Is there a goat with this color? " << (hasColor ? "Yes" : "No") << endl;
 }
